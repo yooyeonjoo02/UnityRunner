@@ -4,7 +4,7 @@ public class GroundLoop : MonoBehaviour
 {
     public Transform[] grounds;
 
-    public float moveSpeed = 10f;
+    // public float moveSpeed = 10f;
     public float groundLength = 100f;
     public float resetZ = -100f;
 
