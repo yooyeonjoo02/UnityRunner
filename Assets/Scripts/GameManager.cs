@@ -30,6 +30,19 @@ public class GameManager : MonoBehaviour
 
     private List<Record> records = new List<Record>();
 
+    public static GameManager Instance;
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         Time.timeScale = 1f;
@@ -134,4 +147,29 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    #region 게임 아이템 로직
+
+    // 시간 가속 아이템 효과 (FastItem에서 호출)
+    public void ApplyTimeScaleEffect(float multiplier, float duration)
+    {
+        StartCoroutine(TimeScaleRoutine(multiplier, duration));
+    }
+    private System.Collections.IEnumerator TimeScaleRoutine(float multiplier, float duration)
+    {
+        Time.timeScale = multiplier;
+        
+        // Time.timeScale이 변했으므로 실제 흐르는 시간을 기준으로 대기해야 함
+        yield return new WaitForSecondsRealtime(duration); 
+        
+        // 원래대로 복구 (게임오버 상태가 아닐 때만)
+        if (!isGameOver) 
+        {
+            Time.timeScale = 1f;
+        }
+    }
+
+    
+
+    #endregion
 }
