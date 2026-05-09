@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8090228043766199295}
   - component: {fileID: 5475320633806833316}
   - component: {fileID: 5878251408920898512}
+  - component: {fileID: 2646681997336479755}
   m_Layer: 0
   m_Name: Item2
   m_TagString: Untagged
@@ -126,3 +127,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostItem
   duration: 5
+--- !u!114 &2646681997336479755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8960723398373647180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a12170f409cac448168d82b1e5133d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemMove

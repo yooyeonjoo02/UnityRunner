@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8090228043766199295}
   - component: {fileID: 5475320633806833316}
   - component: {fileID: -102113608931230700}
+  - component: {fileID: 8936729247882350543}
   m_Layer: 0
   m_Name: Item1
   m_TagString: Untagged
@@ -125,6 +126,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4b57829f7658041b2ffd19c342842c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FastItem
-  speedMultiplier: 1.5
-  timeScaleMultiplier: 1.5
+  speedAmount: 10
   duration: 4
+--- !u!114 &8936729247882350543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8960723398373647180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a12170f409cac448168d82b1e5133d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemMove

@@ -1823,10 +1823,13 @@ MonoBehaviour:
   recordListText: {fileID: 564559272}
   gameSpeed: 30
   acceleration: 1
+  spawnZ: 200
   lanes:
   - -3
   - 0
   - 3
+  isGhostMode: 0
+  currentGhostAlpha: 1
 --- !u!4 &1085360025
 Transform:
   m_ObjectHideFlags: 0
@@ -1983,7 +1986,7 @@ GameObject:
   - component: {fileID: 1213042263}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

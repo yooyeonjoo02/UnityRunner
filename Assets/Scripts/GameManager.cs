@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System;
+using System.Collections;
 
 [System.Serializable]
 public class Record
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI recordListText;
     public float gameSpeed = 10f;   // 게임 속도 관리
     public float acceleration = 1f;  // 초당 속도 증가량
+
+    public float spawnZ = 200f; // Spawner에서 사용할 생성 위치 z값
 
     private float time;
     private bool isGameOver = false;
@@ -62,18 +66,11 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
-            // 1. 시간에 따른 속도 상승 
+            // 시간에 따른 속도 상승 
             gameSpeed += acceleration * Time.deltaTime;
-
-            // 2. 시간 및 속도에 비례한 점수 상승 
-            //score += gameSpeed * Time.deltaTime;
-            
-            // UI 업데이트 (기존 timerText 혹은 새로운 scoreText 사용)
-            // if (scoreText != null)
-            //     scoreText.text = "Score: " + Mathf.FloorToInt(score).ToString();
             
             time += Time.deltaTime;
-            timerText.text = time.ToString("F1");
+            timerText.text = time.ToString("F2");
         }
     }
 
@@ -83,7 +80,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
 
         gameOverPanel.SetActive(true);
-        currentRecordText.text = "Record: " + time.ToString("F1") + " sec";
+        currentRecordText.text = "Record : " + time.ToString("F2") + " sec";
     }
 
     public void SaveRecord()
@@ -150,7 +147,7 @@ public class GameManager : MonoBehaviour
             {
                 text += (i + 1) + ". "
                       + records[i].name + " - "
-                      + records[i].time.ToString("F1") + " sec\n";
+                      + records[i].time.ToString("F2") + " sec\n";
             }
         }
 
@@ -165,26 +162,60 @@ public class GameManager : MonoBehaviour
 
     #region 게임 아이템 로직
 
-    // 시간 가속 아이템 효과 (FastItem에서 호출)
-    public void ApplyTimeScaleEffect(float multiplier, float duration)
+    // 속도 증감 아이템 효과 (FastItem, SlowItem에서 호출)
+    public void ApplySpeedItemEffect(float amount, float duration)
     {
-        StartCoroutine(TimeScaleRoutine(multiplier, duration));
+        StartCoroutine(SpeedChangeRoutine(amount, duration));
     }
-    private System.Collections.IEnumerator TimeScaleRoutine(float multiplier, float duration)
+
+    private IEnumerator SpeedChangeRoutine(float amount, float duration)
     {
-        Time.timeScale = multiplier;
+        // 1. 속도를 즉시 n만큼 증가/감소
+        gameSpeed += amount;
         
-        // Time.timeScale이 변했으므로 실제 흐르는 시간을 기준으로 대기해야 함
-        yield return new WaitForSecondsRealtime(duration); 
+        yield return new WaitForSeconds(duration);
         
-        // 원래대로 복구 (게임오버 상태가 아닐 때만)
-        if (!isGameOver) 
-        {
-            Time.timeScale = 1f;
-        }
+        // 2. m초 후 증가/감소시켰던 n만큼 정확히 원상 복구
+        // (그동안 진행된 가속도(acceleration) 곡선은 그대로 부드럽게 유지됨)
+        gameSpeed -= amount;
     }
 
     
+    [HideInInspector] public bool isGhostMode = false;
+    [HideInInspector] public float currentGhostAlpha = 1.0f;
+    // 고스트 아이템 효과 (GhostItem에서 사용)
+    public IEnumerator GhostModeRoutine(float duration, Action callBack)
+    {
+        
+        isGhostMode = true;
+        // 깜빡임 시작 전까지의 일반 반투명 지속 시간 (예: 5초 - 2초 = 3초)
+        float normalDuration = duration - 2f;
+        if (normalDuration < 0) normalDuration = 0;
+
+        // 1. 일반 반투명 상태
+        currentGhostAlpha = 0.3f;
+        yield return new WaitForSeconds(normalDuration);
+
+        // 2. 풀리기 2초 전 깜빡임 (PingPong 효과)
+        float flickerTimer = 0f;
+        while (flickerTimer < 2f)
+        {
+            flickerTimer += Time.deltaTime;
+            
+            // 시간이 지날수록 주파수(Frequency)가 5에서 25로 상승하여 점점 빠르게 깜빡임
+            float frequency = Mathf.Lerp(5f, 25f, flickerTimer / 2f);
+            
+            // Mathf.PingPong을 사용해 0.3(투명) ~ 0.8(진해짐) 사이를 왕복
+            currentGhostAlpha = Mathf.Lerp(0.3f, 0.8f, Mathf.PingPong(flickerTimer * frequency, 1f));
+            
+            yield return null; // 매 프레임 업데이트
+        }
+
+        // 3. 지속시간 종료 후 원상 복구
+        callBack?.Invoke();
+        isGhostMode = false;
+        currentGhostAlpha = 1.0f;
+    }
 
     #endregion
 }

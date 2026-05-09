@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8090228043766199295}
   - component: {fileID: 5475320633806833316}
   - component: {fileID: -4562771645903055034}
+  - component: {fileID: 5174323716031641194}
   m_Layer: 0
   m_Name: Item3
   m_TagString: Untagged
@@ -125,3 +126,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190da1338d3367f48bc7244930f2e27a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShieldItem
+--- !u!114 &5174323716031641194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8960723398373647180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a12170f409cac448168d82b1e5133d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemMove

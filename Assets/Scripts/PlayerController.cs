@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
 
 
             Debug.Log("hitting an obstacle!");
-            FindObjectOfType<GameManager>().GameOver();
+            GameManager.Instance.GameOver();
         }
     }
 
@@ -180,75 +180,20 @@ public class PlayerController : MonoBehaviour
         hasShield = true;
     }
 
-    // 2. 속도 감소 적용
-    public void ApplySlowEffect(float multiplier, float duration)
-    {
-        StartCoroutine(SpeedChangeRoutine(multiplier, duration));
-    }
-
-    // 3. 속도 증가 적용
-    public void ApplyFastEffect(float multiplier, float duration)
-    {
-        StartCoroutine(SpeedChangeRoutine(multiplier, duration));
-        
-        // GameManager의 시간 가속도 함께 호출
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.ApplyTimeScaleEffect(multiplier, duration);
-        }
-    }
-
-    // 속도 변경 코루틴 (공통)
-    private System.Collections.IEnumerator SpeedChangeRoutine(float multiplier, float duration)
-    {
-        moveSpeed = originalMoveSpeed * multiplier;
-        yield return new WaitForSecondsRealtime(duration); // TimeScale 변경에 영향받지 않도록 Realtime 사용
-        moveSpeed = originalMoveSpeed;
-    }
-
-    // 4. 고스트 모드 적용
+    // 2. 고스트 모드 적용
     public void ActivateGhostMode(float duration)
     {
         if (!isGhostMode) 
         {
-            StartCoroutine(GhostModeRoutine(duration));
+            isGhostMode = true;
+            StartCoroutine(GameManager.Instance.GhostModeRoutine(duration, GhostModeAfter));
         }
     }
 
-    private System.Collections.IEnumerator GhostModeRoutine(float duration)
+    // 고스트 아이템 효과가 끝나고 호출될 콜백함수
+    private void GhostModeAfter()
     {
-        isGhostMode = true;
-        
-        // 맵에 있는 모든 장애물을 찾아서 반투명하게 처리
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject obs in obstacles)
-        {
-            Renderer rend = obs.GetComponent<Renderer>();
-            if (rend != null)
-            {
-                Color c = rend.material.color;
-                c.a = 0.3f; // 알파값을 낮춰 반투명하게 (단, Material이 Transparent여야함)
-                rend.material.color = c;
-            }
-        }
-
-        yield return new WaitForSecondsRealtime(duration);
-
-        // 지속시간 종료 후 원래 투명도로 복구
         isGhostMode = false;
-        
-        // 새로 생성된 장애물도 있을 수 있으므로 다시 Find 수행
-        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject obs in obstacles)
-        {
-            Renderer rend = obs.GetComponent<Renderer>();
-            if (rend != null)
-            {
-                Color c = rend.material.color;
-                c.a = 1.0f; // 알파값 원상복구
-                rend.material.color = c;
-            }
-        }
     }
     #endregion
 }
