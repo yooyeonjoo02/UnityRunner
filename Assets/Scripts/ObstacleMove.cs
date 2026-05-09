@@ -6,7 +6,7 @@ public class ObstacleMove : MonoBehaviour
 
     void Update()
     {
-        float speed = FindObjectOfType<GameManager>().gameSpeed;
+        float speed = GameManager.Instance.gameSpeed;
 
         transform.Translate(Vector3.back * speed * Time.deltaTime);
 

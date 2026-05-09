@@ -10,7 +10,7 @@ public class GroundLoop : MonoBehaviour
 
     void Update()
     {
-        float speed = FindObjectOfType<GameManager>().gameSpeed;
+        float speed = GameManager.Instance.gameSpeed;
 
         foreach (Transform ground in grounds)
         {

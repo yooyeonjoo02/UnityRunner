@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     public TMP_InputField nameInputField;
     public TextMeshProUGUI currentRecordText;
     public TextMeshProUGUI recordListText;
-    public float gameSpeed = 10f;
+    public float gameSpeed = 10f;   // 게임 속도 관리
+    public float acceleration = 1f;  // 초당 속도 증가량
 
     private float time;
     private bool isGameOver = false;
@@ -31,6 +32,10 @@ public class GameManager : MonoBehaviour
     private List<Record> records = new List<Record>();
 
     public static GameManager Instance;
+
+    // Ground 3개의 라인 X 좌표 정보
+    public float[] lanes = { -3f, 0f, 3f };
+
     void Awake()
     {
         if (Instance == null)
@@ -57,6 +62,16 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
+            // 1. 시간에 따른 속도 상승 
+            gameSpeed += acceleration * Time.deltaTime;
+
+            // 2. 시간 및 속도에 비례한 점수 상승 
+            //score += gameSpeed * Time.deltaTime;
+            
+            // UI 업데이트 (기존 timerText 혹은 새로운 scoreText 사용)
+            // if (scoreText != null)
+            //     scoreText.text = "Score: " + Mathf.FloorToInt(score).ToString();
+            
             time += Time.deltaTime;
             timerText.text = time.ToString("F1");
         }
