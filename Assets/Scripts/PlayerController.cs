@@ -88,7 +88,17 @@ public class PlayerController : MonoBehaviour
             // 달리기나 점프 애니메이션이 게임 템포에 맞게 빨라짐
             if (animator != null)
             {
-                animator.speed = speedRatio;
+                if (isGrounded)
+                {
+                    // 땅에 있을 때는 달리기용 템포 적용
+                    animator.speed = speedRatio * 0.4f;
+                }
+                else
+                {
+                    // 공중에 있을 때는 점프용 템포 적용 
+                    // (점프 모션이 너무 느리면 이 값을 1.2f 등으로 올려서 맞출 수 있음)
+                    animator.speed = speedRatio * 0.1f;
+                }
             }
         }
     }
