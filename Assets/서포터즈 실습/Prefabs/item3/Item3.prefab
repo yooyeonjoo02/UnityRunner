@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190da1338d3367f48bc7244930f2e27a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShieldItem
+  pickupParticlePrefab: {fileID: 6570583091032065884, guid: 4350f9f80b1ee9543b56e1c4f8711be9, type: 3}
 --- !u!114 &5174323716031641194
 MonoBehaviour:
   m_ObjectHideFlags: 0

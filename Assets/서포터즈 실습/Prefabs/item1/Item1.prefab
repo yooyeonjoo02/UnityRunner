@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FastItem
   speedAmount: 10
   duration: 4
+  pickupParticlePrefab: {fileID: 0}
 --- !u!114 &8936729247882350543
 MonoBehaviour:
   m_ObjectHideFlags: 0
