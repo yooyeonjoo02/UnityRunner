@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
             lanes = new float[] { -3f, 0f, 3f }; 
         }
 
-        // 기본 중력을 끄고 스크립트에서 커스텀 중력을 통제합니다.
+        // 기본 중력을 끄고 스크립트에서 커스텀 중력을 통제
         rb.useGravity = false;
     }
 
@@ -173,6 +173,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("쉴드로 1회 방어!");
                 hasShield = false; // 쉴드 소모
+                GameManager.Instance.UpdateShieldUI(false); // UI 업데이트 호출
                 
                 // 부딪힌 장애물을 파괴
                 Destroy(collision.gameObject); 
@@ -190,16 +191,15 @@ public class PlayerController : MonoBehaviour
     public void AddShield()
     {
         hasShield = true;
+        GameManager.Instance.UpdateShieldUI(true); // UI 업데이트 호출
     }
 
     // 2. 고스트 모드 적용
     public void ActivateGhostMode(float duration)
     {
-        if (!isGhostMode) 
-        {
-            isGhostMode = true;
-            StartCoroutine(GameManager.Instance.GhostModeRoutine(duration, GhostModeAfter));
-        }
+        isGhostMode = true;
+        // GameManager에게 쿨타임 관리를 전담시킴 (중복 섭취 시 갱신 포함)
+        GameManager.Instance.ActivateGhostMode(duration, GhostModeAfter);
     }
 
     // 고스트 아이템 효과가 끝나고 호출될 콜백함수

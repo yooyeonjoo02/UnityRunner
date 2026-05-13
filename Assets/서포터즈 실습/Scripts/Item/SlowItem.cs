@@ -22,7 +22,7 @@ public class SlowItem : MonoBehaviour
             }
 
             if (GameManager.Instance != null)
-                GameManager.Instance.ApplySpeedItemEffect(slowAmount, duration);
+                GameManager.Instance.ApplySpeedItemEffect(slowAmount, duration, false);
             Destroy(gameObject);
         }
     }

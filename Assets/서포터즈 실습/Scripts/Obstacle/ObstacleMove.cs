@@ -19,24 +19,6 @@ public class ObstacleMove : MonoBehaviour
     {
         transform.Translate(Vector3.back * GameManager.Instance.gameSpeed * Time.deltaTime);
 
-        // 고스트 모드 알파값 실시간 동기화
-        if (rend != null && GameManager.Instance != null)
-        {
-            if (GameManager.Instance.isGhostMode)
-            {
-                Color c = originalColor;
-                c.a = GameManager.Instance.currentGhostAlpha; // 점점 빨라지는 깜빡임 반영
-                rend.material.color = c;
-            }
-            else
-            {
-                // 고스트 모드가 아닐 때는 원래 투명도 유지
-                Color c = originalColor;
-                c.a = 1.0f;
-                rend.material.color = c;
-            }
-        }
-
         if (transform.position.z < -10f)
         {
             Destroy(gameObject);

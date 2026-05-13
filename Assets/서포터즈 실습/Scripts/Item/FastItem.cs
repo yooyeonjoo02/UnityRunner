@@ -23,7 +23,7 @@ public class FastItem : MonoBehaviour
             }
 
             if (GameManager.Instance != null)
-                GameManager.Instance.ApplySpeedItemEffect(speedAmount, duration);
+                GameManager.Instance.ApplySpeedItemEffect(speedAmount, duration, true);
             Destroy(gameObject);
         }
     }
