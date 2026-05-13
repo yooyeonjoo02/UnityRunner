@@ -50,21 +50,23 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
-Assets/Scripts/
- GameManager.cs
- GroundLoop.cs
+Assets/서포터즈 실습/Scripts/Item/
+ FastItem.cs
+ GhostItem.cs
  ItemMove.cs
- Items/
-  FastItem.cs
-  GhostItem.cs
-  ShieldItem.cs
-  SlowItem.cs
  ItemSpawner.cs
+ ShieldItem.cs
+ SlowItem.cs
+Assets/서포터즈 실습/Scripts/Obstacle/
  ObstacleMove.cs
  ObstacleSpawner.cs
+Assets/서포터즈 실습/Scripts/
  PlayerController.cs
  SkyboxRotator.cs
-Assets/TutorialInfo/Scripts/Readme.cs
+ System/
+  GameManager.cs
+  GroundLoop.cs
+Assets/서포터즈 실습/Systems/TutorialInfo/Scripts/Readme.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]
