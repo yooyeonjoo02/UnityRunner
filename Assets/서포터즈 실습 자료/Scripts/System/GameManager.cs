@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
     
     // 고스트 UI
     public Image ghostCooldownImage; // 초기 Item Type이 Filled로 설정되어 있어야 함
+    public GameObject ghostItem;
+    public GameObject ghostBackground;
 
 
     [Header("Game Settings")]
@@ -53,6 +55,9 @@ public class GameManager : MonoBehaviour
     private float ghostTimer = 0f;
     private float ghostDurationMax = 0f;
     private Coroutine ghostCoroutine;
+
+    // 속도 피드백 코루틴 추적 변수
+    private Coroutine speedFeedbackCoroutine;
     
     // 게임 시스템 용 변수
     private float time;
@@ -94,6 +99,11 @@ public class GameManager : MonoBehaviour
         UpdateShieldUI(false);
 
         ShowRecordList();
+
+        if(ghostBackground != null)
+            ghostBackground.SetActive(true);
+        if(ghostItem != null)
+            ghostItem.SetActive(true);
     }
 
     void Update()
@@ -116,7 +126,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
 
         gameOverPanel.SetActive(true);
-        currentRecordText.text = "Record : " + time.ToString("F2") + " sec";
+        currentRecordText.text = "Record : " + time.ToString("F2") + " 점";
     }
 
     public void SaveRecord()
@@ -184,7 +194,7 @@ public class GameManager : MonoBehaviour
             {
                 if (i < records.Count)
                 {
-                    text += (i + 1) + ". " + records[i].name + " - " + records[i].time.ToString("F2") + " sec\n";
+                    text += (i + 1) + ". " + records[i].name + " - " + records[i].time.ToString("F2") + " 점\n";
                 }
                 else
                 {
@@ -210,9 +220,13 @@ public class GameManager : MonoBehaviour
         // 로직 코루틴
         StartCoroutine(SpeedChangeRoutine(amount, duration));
 
-        // 시각적 코루틴 (기존 코루틴 덮어쓰기 방지)
-        StopCoroutine("ShowSpeedFeedbackRoutine");
-        StartCoroutine(ShowSpeedFeedbackRoutine(isFast));
+        // 시각적 코루틴 (기존 코루틴을 덮어 쓰도록 하여 애니메이션 filkering 문제 해결)
+        if (speedFeedbackCoroutine != null)
+        {
+            StopCoroutine(speedFeedbackCoroutine);
+        }
+        // 새로운 애니메이션을 시작하고 변수에 저장하여 추적
+        speedFeedbackCoroutine = StartCoroutine(ShowSpeedFeedbackRoutine(isFast));
     }
 
     // 공용 - 속도 변경 코루틴
@@ -234,7 +248,7 @@ public class GameManager : MonoBehaviour
     {
         if (speedFeedbackText == null || speedFeedbackCanvasGroup == null) yield break;
 
-        speedFeedbackText.text = isFast ? "속도 증가 ↑" : "속도 감소 ↓";
+        speedFeedbackText.text = isFast ? "속도 증가" : "속도 감소";
         
         // 이동 방향 설정 (증가: 아래에서 위 / 감소: 위에서 아래)
         float startY = isFast ? -50f : 50f;
