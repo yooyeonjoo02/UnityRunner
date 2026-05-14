@@ -2423,7 +2423,7 @@ MonoBehaviour:
   - {fileID: 521896333}
   - {fileID: 926770022}
   - {fileID: 1429802549}
-  groundLength: 100
+  groundLength: 25
   resetZ: -100
 --- !u!114 &1085360022
 MonoBehaviour:
