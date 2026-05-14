@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24f9fbe8539ddf4b997165e0a2abaa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostItem
-  duration: 5
+  duration: 3
   pickupParticlePrefab: {fileID: 6570583091032065884, guid: 4350f9f80b1ee9543b56e1c4f8711be9, type: 3}
 --- !u!114 &2646681997336479755
 MonoBehaviour:

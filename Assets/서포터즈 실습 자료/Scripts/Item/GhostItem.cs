@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GhostItem : MonoBehaviour
 {
-    public float duration = 5f; // 지속 시간 5초
+    public float duration = 3f; // 지속 시간
 
     public GameObject pickupParticlePrefab; // 파티클 프리팹 추가
 
