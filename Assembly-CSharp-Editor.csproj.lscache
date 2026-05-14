@@ -50,13 +50,13 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
-Assets/서포터즈 실습/Systems/Asset Packs/Texture Channel Packer/Editor/
+Assets/서포터즈 실습 자료/Systems/Asset Packs/Texture Channel Packer/Editor/
  TextureChannel.cs
  TextureChannelPacker.cs
  TextureExporter.cs
  TextureField.cs
  TextureGenerator.cs
-Assets/서포터즈 실습/Systems/TutorialInfo/Scripts/Editor/ReadmeEditor.cs
+Assets/서포터즈 실습 자료/Systems/TutorialInfo/Scripts/Editor/ReadmeEditor.cs
 Temp/obj/Assembly-CSharp-Editor/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]
